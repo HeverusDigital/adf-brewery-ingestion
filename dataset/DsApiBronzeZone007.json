@@ -1,0 +1,12 @@
+{
+	"name": "DsApiBronzeZone007",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSAPIConRestZone007",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}

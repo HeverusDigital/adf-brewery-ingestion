@@ -1,0 +1,24 @@
+{
+	"name": "DsParquetBronzeZone007",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSBlobStorageBrewZone007",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat('Bronze',convertTimeZone(utcnow(),'UTC','Brazil Standard Time'))",
+					"type": "Expression"
+				},
+				"folderPath": "Bronze",
+				"container": "dlbrewregion007"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
