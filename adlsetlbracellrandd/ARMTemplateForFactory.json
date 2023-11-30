@@ -21,7 +21,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/APItoParquet')]",
+			"name": "[concat(parameters('factoryName'), '/Bronze_Zone007')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -69,7 +69,8 @@
 											"path": "$['id']"
 										},
 										"sink": {
-											"name": "id"
+											"name": "id",
+											"type": "Int32"
 										}
 									},
 									{
@@ -77,7 +78,8 @@
 											"path": "$['name']"
 										},
 										"sink": {
-											"name": "name"
+											"name": "name",
+											"type": "String"
 										}
 									},
 									{
@@ -85,7 +87,8 @@
 											"path": "$['brewery_type']"
 										},
 										"sink": {
-											"name": "brewery_type"
+											"name": "brewery_type",
+											"type": "String"
 										}
 									},
 									{
@@ -93,7 +96,8 @@
 											"path": "$['address_1']"
 										},
 										"sink": {
-											"name": "address_1"
+											"name": "address_1",
+											"type": "String"
 										}
 									},
 									{
@@ -101,7 +105,8 @@
 											"path": "$['address_2']"
 										},
 										"sink": {
-											"name": "address_2"
+											"name": "address_2",
+											"type": "String"
 										}
 									},
 									{
@@ -109,7 +114,8 @@
 											"path": "$['address_3']"
 										},
 										"sink": {
-											"name": "address_3"
+											"name": "address_3",
+											"type": "String"
 										}
 									},
 									{
@@ -117,7 +123,8 @@
 											"path": "$['city']"
 										},
 										"sink": {
-											"name": "city"
+											"name": "city",
+											"type": "String"
 										}
 									},
 									{
@@ -125,7 +132,8 @@
 											"path": "$['state_province']"
 										},
 										"sink": {
-											"name": "state_province"
+											"name": "state_province",
+											"type": "String"
 										}
 									},
 									{
@@ -133,7 +141,8 @@
 											"path": "$['postal_code']"
 										},
 										"sink": {
-											"name": "postal_code"
+											"name": "postal_code",
+											"type": "String"
 										}
 									},
 									{
@@ -141,7 +150,8 @@
 											"path": "$['country']"
 										},
 										"sink": {
-											"name": "country"
+											"name": "country",
+											"type": "String"
 										}
 									},
 									{
@@ -149,7 +159,8 @@
 											"path": "$['longitude']"
 										},
 										"sink": {
-											"name": "longitude"
+											"name": "longitude",
+											"type": "String"
 										}
 									},
 									{
@@ -157,7 +168,8 @@
 											"path": "$['latitude']"
 										},
 										"sink": {
-											"name": "latitude"
+											"name": "latitude",
+											"type": "String"
 										}
 									},
 									{
@@ -165,7 +177,8 @@
 											"path": "$['phone']"
 										},
 										"sink": {
-											"name": "phone"
+											"name": "phone",
+											"type": "String"
 										}
 									},
 									{
@@ -173,7 +186,8 @@
 											"path": "$['website_url']"
 										},
 										"sink": {
-											"name": "website_url"
+											"name": "website_url",
+											"type": "String"
 										}
 									},
 									{
@@ -181,7 +195,8 @@
 											"path": "$['state']"
 										},
 										"sink": {
-											"name": "state"
+											"name": "state",
+											"type": "String"
 										}
 									},
 									{
@@ -189,10 +204,12 @@
 											"path": "$['street']"
 										},
 										"sink": {
-											"name": "street"
+											"name": "street",
+											"type": "String"
 										}
 									}
-								]
+								],
+								"mapComplexValuesToString": true
 							}
 						},
 						"inputs": [
@@ -254,7 +271,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
-							"value": "@concat('Bronze',convertTimeZone(utcnow(),'UTC','Brazil Standard Time'))",
+							"value": "@concat('Bronze',utcnow())",
 							"type": "Expression"
 						},
 						"folderPath": "Bronze",
