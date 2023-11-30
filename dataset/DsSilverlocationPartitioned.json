@@ -1,0 +1,20 @@
+{
+	"name": "DsSilverlocationPartitioned",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSBlobStorageBrewZone007",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Silver",
+				"container": "dlbrewregion007"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
