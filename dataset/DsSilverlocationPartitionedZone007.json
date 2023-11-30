@@ -13,7 +13,7 @@
 				"folderPath": "Silver",
 				"container": "dlbrewregion007"
 			},
-			"compressionCodec": "snappy"
+			"compressionCodec": "none"
 		},
 		"schema": []
 	}
