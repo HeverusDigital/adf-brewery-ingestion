@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DsSilverlocationPartitionedZone007",
+						"referenceName": "DsParquetBronzeZone007",
 						"type": "DatasetReference"
 					},
 					"name": "partitionlocation"
