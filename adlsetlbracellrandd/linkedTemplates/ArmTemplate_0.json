@@ -356,7 +356,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DsParquetBronzeZone007",
+								"referenceName": "DsSilverlocationPartitionedZone007",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -408,7 +408,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]",
-				"[concat(variables('factoryId'), '/datasets/DsParquetBronzeZone007')]"
+				"[concat(variables('factoryId'), '/datasets/DsSilverlocationPartitionedZone007')]"
 			]
 		},
 		{
@@ -437,7 +437,8 @@
 								"datasetParameters": {
 									"sourcebronzeparquetzone007": {},
 									"sink1": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
