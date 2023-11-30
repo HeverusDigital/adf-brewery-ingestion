@@ -18,7 +18,11 @@
 						"referenceName": "DsParquetBronzeZone007",
 						"type": "DatasetReference"
 					},
-					"name": "partitionlocation"
+					"name": "partitionlocation",
+					"rejectedDataLinkedService": {
+						"referenceName": "LSBlobStorageBrewZone007",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [],
