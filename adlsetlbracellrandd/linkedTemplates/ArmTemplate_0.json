@@ -82,14 +82,37 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat('Bronze',utcnow())",
-							"type": "Expression"
-						},
+						"fileName": "bronze",
 						"folderPath": "Bronze",
 						"container": "dlbrewregion007"
 					},
-					"compressionCodec": "snappy"
+					"compressionCodec": "none"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DsSilverlocationPartitionedZone007')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LSBlobStorageBrewZone007",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "location",
+						"folderPath": "Silver",
+						"container": "dlbrewregion007"
+					},
+					"compressionCodec": "none"
 				},
 				"schema": []
 			},
@@ -105,8 +128,8 @@
 				"description": "APItoParquet",
 				"activities": [
 					{
-						"name": "Data Transfer Bronze",
-						"description": "Data Transfer Bronze",
+						"name": "Data Load Bronze",
+						"description": "Data Load Bronze",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -130,8 +153,7 @@
 							"sink": {
 								"type": "ParquetSink",
 								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
+									"type": "AzureBlobStorageWriteSettings"
 								},
 								"formatSettings": {
 									"type": "ParquetWriteSettings"
@@ -313,6 +335,126 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DsApiBronzeZone007')]",
 				"[concat(variables('factoryId'), '/datasets/DsParquetBronzeZone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DfSilverZone007')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "LSBlobStorageBrewZone007",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sourcebronzeparquetzone007"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DsParquetBronzeZone007",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          id as string,",
+						"          name as string,",
+						"          brewery_type as string,",
+						"          address_1 as string,",
+						"          address_2 as string,",
+						"          address_3 as string,",
+						"          city as string,",
+						"          state_province as string,",
+						"          postal_code as string,",
+						"          country as string,",
+						"          longitude as string,",
+						"          latitude as string,",
+						"          phone as string,",
+						"          website_url as string,",
+						"          state as string,",
+						"          street as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     limit: 100,",
+						"     ignoreNoFilesFound: true,",
+						"     format: 'parquet',",
+						"     container: 'dlbrewregion007',",
+						"     folderPath: 'Bronze',",
+						"     fileName: 'bronze',",
+						"     partitionBy('key',",
+						"          0,",
+						"          city",
+						"     )) ~> sourcebronzeparquetzone007",
+						"sourcebronzeparquetzone007 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('key',",
+						"          0,",
+						"          city",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]",
+				"[concat(variables('factoryId'), '/datasets/DsParquetBronzeZone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Silver_Zone007')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DfSilverLocationPartitionZone007",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DfSilverZone007",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourcebronzeparquetzone007": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DfSilverZone007')]"
 			]
 		}
 	]
