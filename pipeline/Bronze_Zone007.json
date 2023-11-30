@@ -4,8 +4,8 @@
 		"description": "APItoParquet",
 		"activities": [
 			{
-				"name": "Data Transfer Bronze",
-				"description": "Data Transfer Bronze",
+				"name": "Data Load Bronze",
+				"description": "Data Load Bronze",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
