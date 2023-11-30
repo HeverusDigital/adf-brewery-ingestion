@@ -10,10 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@concat('Bronze',utcnow())",
-					"type": "Expression"
-				},
+				"fileName": "bronze",
 				"folderPath": "Bronze",
 				"container": "dlbrewregion007"
 			},
