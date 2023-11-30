@@ -1,0 +1,56 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nome do Data Factory",
+			"defaultValue": "adlsetlbracellrandd"
+		},
+		"LSBlobStorageBrewZone007_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'LSBlobStorageBrewZone007'"
+		},
+		"LSAPIConRestZone007_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.openbrewerydb.org/v1/breweries"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI para a conta de armazenamento contendo os modelos do ARM vinculados"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token SAS para a conta de armazenamento contendo modelos do ARM vinculados"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adlsetlbracellrandd_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LSBlobStorageBrewZone007_connectionString": {
+						"value": "[parameters('LSBlobStorageBrewZone007_connectionString')]"
+					},
+					"LSAPIConRestZone007_properties_typeProperties_url": {
+						"value": "[parameters('LSAPIConRestZone007_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
