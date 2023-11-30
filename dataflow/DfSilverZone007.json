@@ -14,9 +14,9 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DsParquetBronzeZone007",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "LSBlobStorageBrewZone007",
+						"type": "LinkedServiceReference"
 					},
 					"name": "partitionlocation",
 					"rejectedDataLinkedService": {
@@ -38,6 +38,8 @@
 				"sourcebronzeparquetzone007 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
+				"     container: 'dlbrewregion007',",
+				"     folderPath: 'silver',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
