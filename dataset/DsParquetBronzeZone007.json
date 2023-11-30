@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@concat('Bronze',convertTimeZone(utcnow(),'UTC','Brazil Standard Time'))",
+					"value": "@concat('Bronze',utcnow())",
 					"type": "Expression"
 				},
 				"folderPath": "Bronze",
