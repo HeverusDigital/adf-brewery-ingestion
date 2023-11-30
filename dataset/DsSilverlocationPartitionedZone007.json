@@ -1,5 +1,5 @@
 {
-	"name": "DsSilverlocationPartitioned",
+	"name": "DsSilverlocationPartitionedZone007",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LSBlobStorageBrewZone007",

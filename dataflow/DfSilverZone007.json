@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "DfSilverZone007",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -12,14 +12,35 @@
 					"name": "sourcebronzeparquetzone007"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DsSilverlocationPartitionedZone007",
+						"type": "DatasetReference"
+					},
+					"name": "partitionlocation"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     limit: 100,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> sourcebronzeparquetzone007"
+				"     format: 'parquet',",
+				"     container: 'dlbrewregion007',",
+				"     folderPath: 'Bronze',",
+				"     fileName: 'bronze') ~> sourcebronzeparquetzone007",
+				"sourcebronzeparquetzone007 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     partitionBy('key',",
+				"          0,",
+				"          ERROR_FUNCTION('')",
+				"     )) ~> partitionlocation"
 			]
 		}
 	}
