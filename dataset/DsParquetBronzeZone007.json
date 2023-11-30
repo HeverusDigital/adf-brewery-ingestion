@@ -17,7 +17,7 @@
 				"folderPath": "Bronze",
 				"container": "dlbrewregion007"
 			},
-			"compressionCodec": "snappy"
+			"compressionCodec": "none"
 		},
 		"schema": []
 	}
