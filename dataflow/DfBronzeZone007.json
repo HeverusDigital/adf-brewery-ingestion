@@ -1,0 +1,25 @@
+{
+	"name": "DfBronzeZone007",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DsParquetBronzeZone007",
+						"type": "DatasetReference"
+					},
+					"name": "sourcebronze"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> sourcebronze"
+			]
+		}
+	}
+}

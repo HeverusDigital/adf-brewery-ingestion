@@ -46,7 +46,7 @@
 								},
 								"sink": {
 									"name": "id",
-									"type": "Int32"
+									"type": "String"
 								}
 							},
 							{
