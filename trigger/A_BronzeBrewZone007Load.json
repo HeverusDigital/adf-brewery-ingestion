@@ -1,0 +1,25 @@
+{
+	"name": "A_BronzeBrewZone007Load",
+	"properties": {
+		"description": "A_BronzeBrewZone007Load",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Bronze_Zone007",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 6,
+				"startTime": "2023-11-30T15:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
