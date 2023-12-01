@@ -6,8 +6,8 @@
 		"type": "AzureDatabricks",
 		"typeProperties": {
 			"domain": "https://adb-5665704831281694.14.azuredatabricks.net",
-			"existingClusterId": "\"fs.azure.account.key.adslbacellrandd.dfs.core.windows.net\",\"c7joFJXppeIULijgn+3Pp9exi37DG/J0oimIVEfCHTVhrTF//CDZuPfdwcW4lPqQh6U5EYpei4c0+ASt58qkVg==\"",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJCMTkwM0M4LTJEREYtNDI4My1CMjA0LTlDMzc1RUFGQjU0Nl85YTI2ZmI5NS1lZGUzLTRmMzYtYjJmZC04ZTFlZGQ4MDg1NjIiDQp9"
+			"existingClusterId": "0718-192454-fwv3kqn3",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJCMTkwM0M4LTJEREYtNDI4My1CMjA0LTlDMzc1RUFGQjU0Nl8zODgxNzVlMS1kYTllLTRlOWItYmZiMy05MGMzZGQwOWU1ODQiDQp9"
 		}
 	}
 }
