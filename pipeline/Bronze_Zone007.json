@@ -201,7 +201,7 @@
 				]
 			},
 			{
-				"name": "DF_Load_Bronze",
+				"name": "DF_Load_Bronze_Check",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -219,6 +219,9 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/henrique@facilitamuito.com.br/CZ_DW/CZ_DW_TMSIngestion"
+				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks_Zone007",
 					"type": "LinkedServiceReference"

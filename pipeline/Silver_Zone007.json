@@ -25,6 +25,34 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "DF_Load_Silver_Check",
+				"description": "DF_Load_Silver_Check",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "DfSilverLocationPartitionZone007",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/henrique@facilitamuito.com.br/CZ_DW/CZ_DW_TMSIngestion_Silver"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_Zone007",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
