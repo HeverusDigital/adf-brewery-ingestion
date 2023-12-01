@@ -1,0 +1,53 @@
+{
+	"name": "DfGoldZone007",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "LSBlobStorageBrewZone007",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          brewery_type as string,",
+				"          address_1 as string,",
+				"          address_2 as string,",
+				"          address_3 as string,",
+				"          city as string,",
+				"          state_province as string,",
+				"          postal_code as string,",
+				"          country as string,",
+				"          longitude as string,",
+				"          latitude as string,",
+				"          phone as string,",
+				"          website_url as string,",
+				"          state as string,",
+				"          street as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet',",
+				"     container: 'dlbrewregion007',",
+				"     folderPath: 'Bronze',",
+				"     fileName: 'bronze') ~> source",
+				"source aggregate(groupBy(city,",
+				"          brewery_type),",
+				"     storesquantity = count(name)) ~> aggregate1"
+			]
+		}
+	}
+}
