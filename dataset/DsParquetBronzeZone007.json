@@ -16,6 +16,71 @@
 			},
 			"compressionCodec": "none"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "id",
+				"type": "UTF8"
+			},
+			{
+				"name": "name",
+				"type": "UTF8"
+			},
+			{
+				"name": "brewery_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "address_1",
+				"type": "UTF8"
+			},
+			{
+				"name": "address_2",
+				"type": "UTF8"
+			},
+			{
+				"name": "address_3",
+				"type": "UTF8"
+			},
+			{
+				"name": "city",
+				"type": "UTF8"
+			},
+			{
+				"name": "state_province",
+				"type": "UTF8"
+			},
+			{
+				"name": "postal_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "country",
+				"type": "UTF8"
+			},
+			{
+				"name": "longitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "latitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "phone",
+				"type": "UTF8"
+			},
+			{
+				"name": "website_url",
+				"type": "UTF8"
+			},
+			{
+				"name": "state",
+				"type": "UTF8"
+			},
+			{
+				"name": "street",
+				"type": "UTF8"
+			}
+		]
 	}
 }
