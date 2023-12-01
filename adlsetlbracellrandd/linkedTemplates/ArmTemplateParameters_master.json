@@ -5,8 +5,14 @@
 		"factoryName": {
 			"value": "adlsetlbracellrandd"
 		},
+		"AzureDatabricks_Zone007_accessToken": {
+			"value": ""
+		},
 		"LSBlobStorageBrewZone007_connectionString": {
 			"value": ""
+		},
+		"AzureDatabricks_Zone007_properties_typeProperties_existingClusterId": {
+			"value": "0718-192454-fwv3kqn3"
 		},
 		"LSAPIConRestZone007_properties_typeProperties_url": {
 			"value": "https://api.openbrewerydb.org/v1/breweries"

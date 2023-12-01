@@ -7,9 +7,17 @@
 			"metadata": "Nome do Data Factory",
 			"defaultValue": "adlsetlbracellrandd"
 		},
+		"AzureDatabricks_Zone007_accessToken": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks_Zone007'"
+		},
 		"LSBlobStorageBrewZone007_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'LSBlobStorageBrewZone007'"
+		},
+		"AzureDatabricks_Zone007_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0718-192454-fwv3kqn3"
 		},
 		"LSAPIConRestZone007_properties_typeProperties_url": {
 			"type": "string",
@@ -225,6 +233,33 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "DF_Load_Bronze_Check",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Data Load Bronze",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/henrique@facilitamuito.com.br/CZ_DW/CZ_DW_TMSIngestion"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_Zone007",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -234,7 +269,83 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DsApiBronzeZone007')]",
-				"[concat(variables('factoryId'), '/datasets/DsParquetBronzeZone007')]"
+				"[concat(variables('factoryId'), '/datasets/DsParquetBronzeZone007')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_Zone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Silver_Zone007')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DfSilverLocationPartitionZone007",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DfSilverZone007",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourcebronzeparquetzone007": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Load_Silver_Check",
+						"description": "DF_Load_Silver_Check",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "DfSilverLocationPartitionZone007",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/henrique@facilitamuito.com.br/CZ_DW/CZ_DW_TMSIngestion_Silver"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_Zone007",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DfSilverZone007')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_Zone007')]"
 			]
 		},
 		{
@@ -275,11 +386,120 @@
 					},
 					"compressionCodec": "none"
 				},
+				"schema": [
+					{
+						"name": "id",
+						"type": "UTF8"
+					},
+					{
+						"name": "name",
+						"type": "UTF8"
+					},
+					{
+						"name": "brewery_type",
+						"type": "UTF8"
+					},
+					{
+						"name": "address_1",
+						"type": "UTF8"
+					},
+					{
+						"name": "address_2",
+						"type": "UTF8"
+					},
+					{
+						"name": "address_3",
+						"type": "UTF8"
+					},
+					{
+						"name": "city",
+						"type": "UTF8"
+					},
+					{
+						"name": "state_province",
+						"type": "UTF8"
+					},
+					{
+						"name": "postal_code",
+						"type": "UTF8"
+					},
+					{
+						"name": "country",
+						"type": "UTF8"
+					},
+					{
+						"name": "longitude",
+						"type": "UTF8"
+					},
+					{
+						"name": "latitude",
+						"type": "UTF8"
+					},
+					{
+						"name": "phone",
+						"type": "UTF8"
+					},
+					{
+						"name": "website_url",
+						"type": "UTF8"
+					},
+					{
+						"name": "state",
+						"type": "UTF8"
+					},
+					{
+						"name": "street",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DsSilverlocationPartitionedZone007')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LSBlobStorageBrewZone007",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "location",
+						"folderPath": "Silver",
+						"container": "dlbrewregion007"
+					},
+					"compressionCodec": "none"
+				},
 				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_Zone007')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-5665704831281694.14.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_Zone007_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_Zone007_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LSAPIConRestZone007')]",
@@ -310,6 +530,37 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/A_BronzeBrewZone007Load')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "A_BronzeBrewZone007Load",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Bronze_Zone007",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 6,
+						"startTime": "2023-11-30T15:00:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Bronze_Zone007')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DfSilverZone007')]",
@@ -383,79 +634,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]",
 				"[concat(variables('factoryId'), '/datasets/DsSilverlocationPartitionedZone007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DsSilverlocationPartitionedZone007')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LSBlobStorageBrewZone007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "location",
-						"folderPath": "Silver",
-						"container": "dlbrewregion007"
-					},
-					"compressionCodec": "none"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Silver_Zone007')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DfSilverLocationPartitionZone007",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DfSilverZone007",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcebronzeparquetzone007": {},
-									"sink1": {}
-								},
-								"linkedServiceParameters": {}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DfSilverZone007')]"
 			]
 		}
 	]

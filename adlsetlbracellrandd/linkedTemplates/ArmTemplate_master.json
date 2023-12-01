@@ -7,9 +7,17 @@
 			"metadata": "Nome do Data Factory",
 			"defaultValue": "adlsetlbracellrandd"
 		},
+		"AzureDatabricks_Zone007_accessToken": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks_Zone007'"
+		},
 		"LSBlobStorageBrewZone007_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'LSBlobStorageBrewZone007'"
+		},
+		"AzureDatabricks_Zone007_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0718-192454-fwv3kqn3"
 		},
 		"LSAPIConRestZone007_properties_typeProperties_url": {
 			"type": "string",
@@ -42,8 +50,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDatabricks_Zone007_accessToken": {
+						"value": "[parameters('AzureDatabricks_Zone007_accessToken')]"
+					},
 					"LSBlobStorageBrewZone007_connectionString": {
 						"value": "[parameters('LSBlobStorageBrewZone007_connectionString')]"
+					},
+					"AzureDatabricks_Zone007_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_Zone007_properties_typeProperties_existingClusterId')]"
 					},
 					"LSAPIConRestZone007_properties_typeProperties_url": {
 						"value": "[parameters('LSAPIConRestZone007_properties_typeProperties_url')]"
