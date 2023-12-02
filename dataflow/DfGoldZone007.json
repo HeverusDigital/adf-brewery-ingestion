@@ -12,7 +12,15 @@
 					"name": "source"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "LSBlobStorageBrewZone007",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sinkgold"
+				}
+			],
 			"transformations": [
 				{
 					"name": "aggregate1"
@@ -46,7 +54,14 @@
 				"     fileName: 'bronze') ~> source",
 				"source aggregate(groupBy(city,",
 				"          brewery_type),",
-				"     storesquantity = count(name)) ~> aggregate1"
+				"     storesquantity = count(name)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     container: 'dlbrewregion007',",
+				"     folderPath: 'Gold',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkgold"
 			]
 		}
 	}
