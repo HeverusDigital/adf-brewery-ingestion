@@ -1,0 +1,25 @@
+{
+	"name": "A_GoldTriggerZone007",
+	"properties": {
+		"description": "A_GoldTriggerZone007",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Gold_Zone007",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 6,
+				"startTime": "2023-12-13T14:34:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
