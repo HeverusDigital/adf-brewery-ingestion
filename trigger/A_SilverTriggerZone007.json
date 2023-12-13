@@ -1,0 +1,24 @@
+{
+	"name": "A_SilverTriggerZone007",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Silver_Zone007",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 6,
+				"startTime": "2023-12-13T15:15:00",
+				"timeZone": "E. South America Standard Time"
+			}
+		}
+	}
+}
