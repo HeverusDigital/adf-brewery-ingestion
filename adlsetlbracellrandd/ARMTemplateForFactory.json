@@ -274,6 +274,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Gold_Zone007')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DfGoldAgregation",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DfGoldZone007",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source": {},
+									"sinkgold": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DfGoldZone007')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Silver_Zone007')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -553,13 +599,86 @@
 					"recurrence": {
 						"frequency": "Hour",
 						"interval": 6,
-						"startTime": "2023-11-30T15:00:00Z",
-						"timeZone": "UTC"
+						"startTime": "2023-11-30T15:00:00",
+						"timeZone": "E. South America Standard Time"
 					}
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Bronze_Zone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DfGoldZone007')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "LSBlobStorageBrewZone007",
+								"type": "LinkedServiceReference"
+							},
+							"name": "source"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "LSBlobStorageBrewZone007",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sinkgold"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as string,",
+						"          name as string,",
+						"          brewery_type as string,",
+						"          address_1 as string,",
+						"          address_2 as string,",
+						"          address_3 as string,",
+						"          city as string,",
+						"          state_province as string,",
+						"          postal_code as string,",
+						"          country as string,",
+						"          longitude as string,",
+						"          latitude as string,",
+						"          phone as string,",
+						"          website_url as string,",
+						"          state as string,",
+						"          street as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet',",
+						"     container: 'dlbrewregion007',",
+						"     folderPath: 'Bronze',",
+						"     fileName: 'bronze') ~> source",
+						"source aggregate(groupBy(city,",
+						"          brewery_type),",
+						"     storesquantity = count(name)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     container: 'dlbrewregion007',",
+						"     folderPath: 'Gold',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkgold"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]"
 			]
 		},
 		{
@@ -634,6 +753,67 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSBlobStorageBrewZone007')]",
 				"[concat(variables('factoryId'), '/datasets/DsSilverlocationPartitionedZone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/A_SilverTriggerZone007')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Silver_Zone007",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 6,
+						"startTime": "2023-12-13T15:15:00",
+						"timeZone": "E. South America Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Silver_Zone007')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/A_GoldTriggerZone007')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "A_GoldTriggerZone007",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Gold_Zone007",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 6,
+						"startTime": "2023-12-13T14:34:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Gold_Zone007')]"
 			]
 		}
 	]
